@@ -1,23 +1,46 @@
+import { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 
 const StartGameScreen = () => {
+  const [userInput, setUserInput] = useState("");
+
+  const handleUserInput = (inputText) => {
+    setUserInput(inputText);
+  };
+
+  const validateInput = () => {};
+
   return (
     <View style={styles.inputContainer}>
-      <TextInput />
-      <PrimaryButton>Reset</PrimaryButton>
-      <PrimaryButton>Confirm</PrimaryButton>
+      <TextInput
+        style={styles.textInput}
+        maxLength={3}
+        keyboardType="numeric"
+        value={userInput}
+        onChangeText={handleUserInput}
+      />
+      <View style={styles.buttonsContainer}>
+        <View style={styles.singleButtonContainer}>
+          <PrimaryButton>Reset</PrimaryButton>
+        </View>
+        <View style={styles.singleButtonContainer}>
+          <PrimaryButton onPress={validateInput}>Confirm</PrimaryButton>
+        </View>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   inputContainer: {
+    justifyContent: "center",
+    alignItems: "center",
     padding: 16,
     marginTop: 100,
     marginHorizontal: 24,
     borderRadius: 8,
-    backgroundColor: "maroon",
+    backgroundColor: "#510400",
     elevation: 4,
     shadowColor: "black",
     shadowOffset: {
@@ -26,6 +49,23 @@ const styles = StyleSheet.create({
     },
     shadowRadius: 6,
     shadowOpacity: 0.25,
+  },
+  textInput: {
+    height: 50,
+    fontSize: 32,
+    borderBottomColor: "#ddb52f",
+    borderBottomWidth: 2,
+    color: "#ddb52f",
+    marginVertical: 8,
+    fontWeight: "bold",
+    width: 60,
+    textAlign: "center",
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+  },
+  singleButtonContainer: {
+    flex: 1,
   },
 });
 
