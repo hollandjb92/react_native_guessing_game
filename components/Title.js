@@ -7,7 +7,7 @@ const Title = ({ children }) => {
 
 const styles = StyleSheet.create({
   title: {
-    color: "white",
+    color: Colors.secondary,
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",

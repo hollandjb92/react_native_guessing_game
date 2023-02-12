@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { StyleSheet, TextInput, View, Alert } from "react-native";
+import Card from "../components/Card";
+import Instruction from "../components/Instruction";
 import PrimaryButton from "../components/PrimaryButton";
+import Title from "../components/Title";
 import Colors from "../utils/colors";
 
 const StartGameScreen = ({ onGameStart }) => {
@@ -29,44 +32,31 @@ const StartGameScreen = ({ onGameStart }) => {
   };
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.textInput}
-        maxLength={3}
-        keyboardType="numeric"
-        value={userInput}
-        onChangeText={handleUserInput}
-      />
-      <View style={styles.buttonsContainer}>
-        <View style={styles.singleButtonContainer}>
-          <PrimaryButton onPress={resetUserInput}>Reset</PrimaryButton>
+    <View style={styles.screenContainer}>
+      <Title>Guess My Number</Title>
+      <Card>
+        <Instruction>Enter a Number between 1-100</Instruction>
+        <TextInput
+          style={styles.textInput}
+          maxLength={3}
+          keyboardType="numeric"
+          value={userInput}
+          onChangeText={handleUserInput}
+        />
+        <View style={styles.buttonsContainer}>
+          <View style={styles.singleButtonContainer}>
+            <PrimaryButton onPress={resetUserInput}>Reset</PrimaryButton>
+          </View>
+          <View style={styles.singleButtonContainer}>
+            <PrimaryButton onPress={validateInput}>Confirm</PrimaryButton>
+          </View>
         </View>
-        <View style={styles.singleButtonContainer}>
-          <PrimaryButton onPress={validateInput}>Confirm</PrimaryButton>
-        </View>
-      </View>
+      </Card>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 16,
-    marginTop: 100,
-    marginHorizontal: 24,
-    borderRadius: 8,
-    backgroundColor: Colors.primary2,
-    elevation: 4,
-    shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowRadius: 6,
-    shadowOpacity: 0.25,
-  },
   textInput: {
     height: 50,
     fontSize: 32,
@@ -83,6 +73,11 @@ const styles = StyleSheet.create({
   },
   singleButtonContainer: {
     flex: 1,
+  },
+  screenContainer: {
+    flex: 1,
+    marginTop: 100,
+    alignItems: "center",
   },
 });
 
