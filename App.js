@@ -3,22 +3,37 @@ import StartGameScreen from "./screens/StartScreen";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import GameScreen from "./screens/GameScreen";
+import Colors from "./utils/colors";
+import GameOverScreen from "./screens/GameOverScreen";
 
 export default function App() {
   const [userNumber, setUserNumber] = useState();
+  const [gameIsOver, setGameIsOver] = useState(true);
 
   const handleStartGame = (chosenNumber) => {
     setUserNumber(chosenNumber);
+    setGameIsOver(false);
+  };
+
+  const handleGameOver = () => {
+    setGameIsOver(true);
   };
 
   let screen = <StartGameScreen onGameStart={handleStartGame} />;
 
   if (userNumber) {
-    screen = <GameScreen />;
+    screen = <GameScreen userNumber={userNumber} onGameOver={handleGameOver} />;
+  }
+
+  if (gameIsOver && userNumber) {
+    screen = <GameOverScreen />;
   }
 
   return (
-    <LinearGradient style={styles.screen} colors={["#820000", "#ddb52f"]}>
+    <LinearGradient
+      style={styles.screen}
+      colors={[Colors.primary3, Colors.secondary]}
+    >
       <ImageBackground
         resizeMode="cover"
         style={styles.screen}
