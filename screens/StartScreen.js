@@ -35,7 +35,9 @@ const StartGameScreen = ({ onGameStart }) => {
     <View style={styles.screenContainer}>
       <Title>Guess My Number</Title>
       <Card>
-        <Instruction>Enter a Number between 1-100</Instruction>
+        <Instruction style={styles.instructionText}>
+          Enter a Number between 1-100
+        </Instruction>
         <TextInput
           style={styles.textInput}
           maxLength={3}
@@ -78,6 +80,9 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 100,
     alignItems: "center",
+  },
+  instructionText: {
+    textAlign: "center",
   },
 });
 
