@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, FlatList, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Card from "../components/Card";
 import Instruction from "../components/Instruction";
@@ -8,6 +8,7 @@ import PrimaryButton from "../components/PrimaryButton";
 import Title from "../components/Title";
 import generateRandomNumber from "../utils/generateRandomNumber";
 import Colors from "../utils/colors";
+import RoundLogItem from "../components/RoundLogItem";
 
 let min = 1;
 let max = 101;
@@ -15,12 +16,19 @@ let max = 101;
 const GameScreen = ({ userNumber, onGameOver }) => {
   const initialGuess = generateRandomNumber(1, 101, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+  const [guessingRounds, setGuessingRounds] = useState([initialGuess]);
+
+  const guessingRoundsLength = guessingRounds.length;
 
   useEffect(() => {
     if (currentGuess === userNumber) {
-      onGameOver();
+      onGameOver(guessingRoundsLength);
     }
   }, [currentGuess, onGameOver, userNumber]);
+
+  useEffect(() => {
+    (min = 1), (max = 101);
+  }, []);
 
   const handleNewGuess = (higherOrLower) => {
     if (
@@ -39,6 +47,7 @@ const GameScreen = ({ userNumber, onGameOver }) => {
     }
     const newRandomNum = generateRandomNumber(min, max, currentGuess);
     setCurrentGuess(newRandomNum);
+    setGuessingRounds((prevState) => [newRandomNum, ...prevState]);
   };
 
   return (
@@ -62,7 +71,18 @@ const GameScreen = ({ userNumber, onGameOver }) => {
           </View>
         </View>
       </Card>
-      <View></View>
+      <View style={styles.listContainer}>
+        <FlatList
+          data={guessingRounds}
+          renderItem={(itemData) => (
+            <RoundLogItem
+              roundNumber={guessingRoundsLength - itemData.index}
+              guess={itemData.item}
+            />
+          )}
+          keyExtractor={(item) => item}
+        />
+      </View>
     </View>
   );
 };
@@ -80,6 +100,10 @@ const styles = StyleSheet.create({
   },
   instructionText: {
     marginBottom: 12,
+  },
+  listContainer: {
+    flex: 1,
+    padding: 16,
   },
 });
 

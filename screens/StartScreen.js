@@ -33,7 +33,7 @@ const StartGameScreen = ({ onGameStart }) => {
 
   return (
     <View style={styles.screenContainer}>
-      <Title>Guess My Number</Title>
+      <Title>Guess Your Number</Title>
       <Card>
         <Instruction style={styles.instructionText}>
           Enter a Number between 1-100
