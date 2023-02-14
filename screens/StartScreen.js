@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { StyleSheet, TextInput, View, Alert } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  Alert,
+  useWindowDimensions,
+  KeyboardAvoidingView,
+  ScrollView,
+} from "react-native";
 import Card from "../components/Card";
 import Instruction from "../components/Instruction";
 import PrimaryButton from "../components/PrimaryButton";
@@ -8,6 +16,8 @@ import Colors from "../utils/colors";
 
 const StartGameScreen = ({ onGameStart }) => {
   const [userInput, setUserInput] = useState("");
+
+  const { height } = useWindowDimensions();
 
   const handleUserInput = (inputText) => {
     setUserInput(inputText);
@@ -31,34 +41,43 @@ const StartGameScreen = ({ onGameStart }) => {
     onGameStart(userNumber);
   };
 
+  const marginTop = height < 375 ? 30 : 100;
+
   return (
-    <View style={styles.screenContainer}>
-      <Title>Guess Your Number</Title>
-      <Card>
-        <Instruction style={styles.instructionText}>
-          Enter a Number between 1-100
-        </Instruction>
-        <TextInput
-          style={styles.textInput}
-          maxLength={3}
-          keyboardType="numeric"
-          value={userInput}
-          onChangeText={handleUserInput}
-        />
-        <View style={styles.buttonsContainer}>
-          <View style={styles.singleButtonContainer}>
-            <PrimaryButton onPress={resetUserInput}>Reset</PrimaryButton>
-          </View>
-          <View style={styles.singleButtonContainer}>
-            <PrimaryButton onPress={validateInput}>Confirm</PrimaryButton>
-          </View>
+    <ScrollView style={styles.root}>
+      <KeyboardAvoidingView style={styles.root} behavior="position">
+        <View style={[styles.screenContainer, { marginTop }]}>
+          <Title>Guess Your Number</Title>
+          <Card>
+            <Instruction style={styles.instructionText}>
+              Enter a Number between 1-100
+            </Instruction>
+            <TextInput
+              style={styles.textInput}
+              maxLength={3}
+              keyboardType="numeric"
+              value={userInput}
+              onChangeText={handleUserInput}
+            />
+            <View style={styles.buttonsContainer}>
+              <View style={styles.singleButtonContainer}>
+                <PrimaryButton onPress={resetUserInput}>Reset</PrimaryButton>
+              </View>
+              <View style={styles.singleButtonContainer}>
+                <PrimaryButton onPress={validateInput}>Confirm</PrimaryButton>
+              </View>
+            </View>
+          </Card>
         </View>
-      </Card>
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
   textInput: {
     height: 50,
     fontSize: 32,
@@ -78,7 +97,6 @@ const styles = StyleSheet.create({
   },
   screenContainer: {
     flex: 1,
-    marginTop: 100,
     alignItems: "center",
   },
   instructionText: {
