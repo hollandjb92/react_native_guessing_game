@@ -1,4 +1,9 @@
-import { StyleSheet, ImageBackground, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  ImageBackground,
+  SafeAreaView,
+  Platform,
+} from "react-native";
 import StartGameScreen from "./screens/StartScreen";
 import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useState } from "react";
@@ -7,6 +12,7 @@ import Colors from "./utils/colors";
 import GameOverScreen from "./screens/GameOverScreen";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -62,20 +68,23 @@ export default function App() {
   }
 
   return (
-    <LinearGradient
-      style={styles.screen}
-      colors={[Colors.primary3, Colors.secondary]}
-      onLayout={onLayout}
-    >
-      <ImageBackground
-        resizeMode="cover"
+    <>
+      <StatusBar style={Platform.select({ ios: "dark", android: "light" })} />
+      <LinearGradient
         style={styles.screen}
-        imageStyle={styles.backgroundImage}
-        source={require("./assets/images/background.png")}
+        colors={[Colors.primary3, Colors.secondary]}
+        onLayout={onLayout}
       >
-        <SafeAreaView style={styles.screen}>{screen}</SafeAreaView>
-      </ImageBackground>
-    </LinearGradient>
+        <ImageBackground
+          resizeMode="cover"
+          style={styles.screen}
+          imageStyle={styles.backgroundImage}
+          source={require("./assets/images/background.png")}
+        >
+          <SafeAreaView style={styles.screen}>{screen}</SafeAreaView>
+        </ImageBackground>
+      </LinearGradient>
+    </>
   );
 }
 

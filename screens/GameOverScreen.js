@@ -4,44 +4,56 @@ import {
   View,
   Text,
   useWindowDimensions,
+  ScrollView,
 } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 import Title from "../components/Title";
 import Colors from "../utils/colors";
 
 const GameOverScreen = ({ numRounds, userNumber, onRestart }) => {
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
 
-  const widthAndHeight = width < 375 ? 150 : 300;
-  const borderRadius = width < 375 ? 75 : 150;
+  let imageSize = 300;
+
+  if (width < 375) {
+    imageSize = 150;
+  }
+
+  if (height < 400) {
+    imageSize = 150;
+  }
+
+  const imageStyle = {
+    width: imageSize,
+    height: imageSize,
+    borderRadius: imageSize / 2,
+  };
+
   return (
-    <View style={styles.screenContainer}>
-      <Title>GAME OVER!</Title>
-      <View
-        style={[
-          styles.imageContainer,
-          { width: widthAndHeight, height: widthAndHeight, borderRadius },
-        ]}
-      >
-        <Image
-          style={styles.image}
-          source={require("../assets/images/foreground.png")}
-        />
+    <ScrollView style={styles.root}>
+      <View style={styles.screenContainer}>
+        <Title>GAME OVER!</Title>
+        <View style={[styles.imageContainer, imageStyle]}>
+          <Image
+            style={styles.image}
+            source={require("../assets/images/foreground.png")}
+          />
+        </View>
+        <Text style={styles.summaryText}>
+          Your phone needed <Text style={styles.highlight}>{numRounds}</Text>{" "}
+          rounds to guess the number{" "}
+          <Text style={styles.highlight}>{userNumber}</Text>!
+        </Text>
+        <PrimaryButton onPress={onRestart}>Restart</PrimaryButton>
       </View>
-      <Text style={styles.summaryText}>
-        Your phone needed <Text style={styles.highlight}>{numRounds}</Text>{" "}
-        rounds to guess the number{" "}
-        <Text style={styles.highlight}>{userNumber}</Text>!
-      </Text>
-      <PrimaryButton onPress={onRestart}>Restart</PrimaryButton>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    padding: 24,
+    padding: 50,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -64,6 +76,9 @@ const styles = StyleSheet.create({
   highlight: {
     fontFamily: "open-sans-bold",
     color: Colors.primary3,
+  },
+  root: {
+    flex: 1,
   },
 });
 

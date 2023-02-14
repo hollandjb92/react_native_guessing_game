@@ -1,4 +1,4 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet, Platform } from "react-native";
 import Colors from "../utils/colors";
 
 const PrimaryButton = ({ children, onPress }) => {
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: "white",
+    color: Platform.select({ ios: "black", android: "white" }),
     textAlign: "center",
   },
   pressed: {

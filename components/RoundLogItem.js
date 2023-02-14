@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import Colors from "../utils/colors";
 
 const RoundLogItem = ({ roundNumber, guess }) => {
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontFamily: "open-sans",
+    color: Platform.select({ ios: "white" }),
   },
 });
 
